@@ -76,11 +76,11 @@ VitePress uses the default theme with custom navigation. The site supports dark 
 
 ## Deployment
 
-The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the main branch. The workflow:
+`.github/workflows/deploy.yml` (repository root) builds every pull request and deploys pushes to `master`:
 
-1. Installs dependencies
-2. Builds the site with `npm run build`
-3. Deploys the `.vitepress/dist/` directory to GitHub Pages
+1. Installs dependencies with `npm ci`
+2. Builds the site with `npm run docs:build`, using the Pages base path from `actions/configure-pages`
+3. Deploys `docs/.vitepress/dist/` to GitHub Pages
 
 ## Content Features
 
