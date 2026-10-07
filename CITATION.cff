@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you reference this research, please cite it using the metadata below."
+type: dataset
+title: "Smart-ID Security Research"
+abstract: >-
+  Independent security research on Smart-ID authentication and cross-device
+  eID vulnerabilities: origin binding, QR-based authentication attacks,
+  FIDO2/WebAuthn comparison and the eIDAS/GDPR regulatory context.
+authors:
+  - family-names: Abel
+    given-names: Tom Kristian
+license: CC-BY-4.0
+repository-code: "https://github.com/tomkabel/smart-id-security-research"
+url: "https://tomkabel.github.io/smart-id-security-research/"
+keywords:
+  - smart-id
+  - eid
+  - authentication
+  - cross-device
+  - security-research
+  - estonia

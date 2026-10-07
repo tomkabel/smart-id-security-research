@@ -1,24 +1,19 @@
 # SKID Security Research Documentation
 
-This directory contains the VitePress-based documentation site for the Estonia Cyber Fraud Research project. It builds automatically to GitHub Pages.
+This directory contains the VitePress-based documentation site for the Smart-ID Security Research project. It builds automatically to GitHub Pages.
 
 ## Quick Start
 
+Run these from the repository root (the toolchain lives in the root `package.json`):
+
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm ci
+npm run docs:dev      # dev server
+npm run docs:build    # production build -> docs/.vitepress/dist
+npm run docs:preview  # preview the production build
 ```
 
-Visit `http://localhost:5173` to view the documentation during development.
+The dev server prints the local URL, including the `/smart-id-security-research/` base path.
 
 ## Project Structure
 
@@ -81,11 +76,11 @@ VitePress uses the default theme with custom navigation. The site supports dark 
 
 ## Deployment
 
-The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the main branch. The workflow:
+`.github/workflows/deploy.yml` (repository root) builds every pull request and deploys pushes to `master`:
 
-1. Installs dependencies
-2. Builds the site with `npm run build`
-3. Deploys the `.vitepress/dist/` directory to GitHub Pages
+1. Installs dependencies with `npm ci`
+2. Builds the site with `npm run docs:build`, using the Pages base path from `actions/configure-pages`
+3. Deploys `docs/.vitepress/dist/` to GitHub Pages
 
 ## Content Features
 

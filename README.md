@@ -1,181 +1,137 @@
-# Smart-ID Security Research
-
 <div align="center">
 
-[![View Documentation](https://img.shields.io/badge/View-Documentation-brightgreen?style=for-the-badge&logo=github)](https://tomkabel.github.io/skid-security-research/)
-[![Live Documentation](https://img.shields.io/badge/Live-Documentation-blueviolet?style=for-the-badge&logo=read-the-docs)](https://tomkabel.github.io/skid-security-research/)
+<img src="docs/public/logo.svg" alt="" width="96" height="96">
 
-[![GitHub Stars](https://img.shields.io/github/stars/tomkabel/skid-security-research?style=for-the-badge)](https://github.com/tomkabel/skid-security-research/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/tomkabel/skid-security-research?style=for-the-badge)](https://github.com/tomkabel/skid-security-research/network/members)
+# Smart-ID Security Research
+
+Independent security research on Smart-ID authentication and cross-device eID vulnerabilities.
+
+[![Deploy](https://img.shields.io/github/actions/workflow/status/tomkabel/smart-id-security-research/deploy.yml?branch=master&label=deploy&logo=githubactions&logoColor=white)](https://github.com/tomkabel/smart-id-security-research/actions/workflows/deploy.yml)
+[![Docs](https://img.shields.io/badge/docs-live-2d5be0?logo=vitepress&logoColor=white)](https://tomkabel.github.io/smart-id-security-research/)
+[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey)](LICENSE)
+[![Last commit](https://img.shields.io/github/last-commit/tomkabel/smart-id-security-research/master)](https://github.com/tomkabel/smart-id-security-research/commits/master)
+
+**[Read the research →](https://tomkabel.github.io/smart-id-security-research/)**
 
 </div>
 
----
+> [!IMPORTANT]
+> This repository documents vulnerabilities that were reported to SK ID Solutions before publication. See the [responsible disclosure timeline](docs/05-enforcement/responsible-disclosure-timeline.md). The material is for education and defensive research; it is not legal advice.
 
-## Research Overview
+## What this covers
 
-This repository contains independent security research examining authentication architectures, vulnerability patterns, and regulatory compliance considerations for electronic identification systems. The research uses Smart-ID as a case study for analyzing broader questions in trust service provider security.
+The research uses Smart-ID as a case study for a broader question: how well do cross-device authentication flows bind the browser session to the phone that approves it?
 
-### Focus Areas
+- Cryptographic origin binding in cross-device flows
+- QR-based authentication and QRLJacking attack vectors
+- Man-in-the-middle exposure in out-of-band authentication
+- FIDO2/WebAuthn as a standards-based comparison point
+- eIDAS and GDPR obligations for trust service providers
+- Migration paths from proprietary to standards-based authentication
 
-- Cryptographic origin binding in cross-device authentication flows
-- QR-based authentication security models and attack vectors
-- FIDO2/WebAuthn standards comparison and alignment
-- Man-in-the-middle vulnerabilities in out-of-band authentication
-- eIDAS and GDPR regulatory compliance frameworks
-- Migration paths from proprietary to standards-based solutions
+## Disclosure status
 
----
+| Date | Event |
+| --- | --- |
+| 2025-11 | Disclosure to SK ID Solutions through official channels |
+| 2025-12-05 | SK ID Solutions replies in writing |
+| 2025-12 | SK ID Solutions marks the CVE entry as DISPUTED |
 
-## Documentation Website
+Full timeline, evidence and quotes: [`docs/05-enforcement/responsible-disclosure-timeline.md`](docs/05-enforcement/responsible-disclosure-timeline.md).
 
-The project includes a full documentation website built with VitePress, automatically deployed to GitHub Pages.
+## Start here
 
-### Access the Research
+| If you want… | Read |
+| --- | --- |
+| The core argument | [Smart-ID Security Analysis](docs/01-core-research/smartid-security-analysis.md) |
+| The attack mechanics | [QRLJacking Analysis](docs/02-technical-security/qrljacking-analysis.md) · [Vulnerability Analysis](docs/02-technical-security/vulnerability-analysis.md) |
+| The standards comparison | [FIDO2 Pivot Analysis](docs/06-supplementary-research/fido2-pivot-analysis.md) |
+| The legal context | [Laws, Acts, and Regulations](docs/03-regulatory-framework/laws-acts-regulations.md) |
+| What was sent to regulators | [RIA](docs/04-regulatory-memoranda/ria-memorandum.md) · [TTJA](docs/04-regulatory-memoranda/ttja-memorandum.md) · [AKI](docs/04-regulatory-memoranda/aki-memorandum.md) memoranda |
+| Liability and enforcement | [Enforcement Strategy](docs/05-enforcement/enforcement-strategy.md) · [Liability Re-Evaluation](docs/05-enforcement/liability-re-evaluation.md) |
 
-**Live Documentation**: [https://tomkabel.github.io/skid-security-research/](https://tomkabel.github.io/skid-security-research/)
+The [documentation site](https://tomkabel.github.io/smart-id-security-research/) has full-text search, a sidebar and dark mode.
 
-### Local Development
+## Key findings
 
-```bash
-cd docs
-npm install
-npm run dev
-```
+The research examines how cross-device flows handle three bindings:
 
-### Production Build
+1. **Origin binding** – tying the credential to the relying party's origin
+2. **Channel binding** – tying the authentication to the underlying TLS session
+3. **User intent** – verifying presence and intent beyond a passive confirmation
 
-```bash
-cd docs
-npm run build
-```
+Against established standards:
 
-The built site will be in `docs/.vitepress/dist/`.
-
-### Deployment
-
-The documentation automatically deploys to GitHub Pages via GitHub Actions on every push to `master`.
-
----
-
-## Repository Structure
-
-```
-.
-├── docs/                              # VitePress documentation website
-│   ├── .vitepress/
-│   │   └── config.ts                 # VitePress configuration
-│   ├── 01-core-research/             # Primary security analysis
-│   ├── 02-technical-security/        # Vulnerability assessments and attack vectors
-│   ├── 03-regulatory-framework/      # Laws, acts, and regulations reference
-│   ├── 04-regulatory-memoranda/      # Formal submissions to Estonian regulators
-│   ├── 05-enforcement/               # Regulatory enforcement strategy
-│   ├── 06-supplementary-research/    # Supporting research and intelligence
-│   ├── 07-opinion-editorials/        # Editorial analysis and expert perspectives
-│   ├── index.md                      # Documentation home page
-│   └── package.json
-├── 06-archived/                       # Historical files from pre-reorganization
-├── LICENSE                            # CC-BY-4.0 license for research content
-├── README.md                          # This file
-└── package.json                       # VitePress build configuration
-```
-
----
-
-## Key Findings
-
-### Authentication Security
-
-The research examines how cross-device authentication flows handle cryptographic binding between the browser session and the mobile authenticator. Key technical considerations include:
-
-1. **Origin Binding**: Cryptographic binding of authentication credentials to the specific relying party origin
-2. **Channel Binding**: Linking the authentication operation to the underlying TLS session
-3. **User Intent Verification**: Mechanisms to verify user presence and intent beyond passive confirmation
-
-### Standards Alignment
-
-Comparison with established standards reveals areas where current implementations may diverge from industry best practices:
-
-- **FIDO2/WebAuthn** provides cryptographic origin binding at the protocol level [[1]](#references)
-- **NIST SP 800-63-4** defines phishing resistance requirements for Authenticator Assurance Level 3 [[2]](#references)
+- **FIDO2/WebAuthn** provides origin binding at the protocol level [[1]](#references)
+- **NIST SP 800-63-4** defines phishing-resistance requirements for AAL3 [[2]](#references)
 - **eIDAS Article 24** requires trust service providers to use trustworthy systems [[3]](#references)
-
-### Regulatory Considerations
-
-Relevant regulatory instruments include:
-
-- **eIDAS Regulation (EU) 910/2014**: Requirements for qualified trust service providers
-- **GDPR Articles 25 and 32**: Data protection by design and security of processing
-- **Estonian EUTS**: National implementation of eIDAS requirements
-
----
 
 ## Recommendations
 
-### For Service Providers
+**Service providers** should implement cryptographic origin binding for high-assurance authentication, evaluate FIDO2/WebAuthn as a standards-based alternative and run regular assessments aligned with NIST guidance.
 
-1. Implement cryptographic origin binding for high-assurance authentication
-2. Evaluate FIDO2/WebAuthn as standards-based alternatives
-3. Conduct regular security assessments aligned with NIST frameworks
-
-### For Policymakers
-
-1. Clarify liability frameworks for authorized push payment fraud
-2. Establish minimum security requirements beyond visual verification
-3. Align national requirements with EU eIDAS implementation guidance
-
----
+**Policymakers** should clarify liability for authorised push payment fraud, set minimum security requirements beyond visual verification and align national rules with EU eIDAS implementation guidance.
 
 ## Methodology
 
-The research employs standard security analysis methodologies including:
+Comparative standards analysis, architecture review against established frameworks, and offensive testing in controlled environments.
 
-- Comparative standards analysis
-- Architecture review against established frameworks
-- Offensive security testing in controlled environments
+## Repository layout
 
----
+```text
+.
+├── docs/                           # VitePress site source (all research lives here)
+│   ├── .vitepress/config.ts        # Site configuration
+│   ├── 01-core-research/
+│   ├── 02-technical-security/
+│   ├── 03-regulatory-framework/
+│   ├── 04-regulatory-memoranda/    # Submissions to RIA, TTJA, AKI
+│   ├── 05-enforcement/             # Incl. responsible disclosure timeline
+│   ├── 06-supplementary-research/
+│   ├── 07-opinion-editorials/
+│   └── public/                     # Logo and favicons
+├── 06-archived/                    # Notes from the pre-reorganisation layout
+├── .github/workflows/deploy.yml    # Build on PRs, deploy to Pages on master
+├── CITATION.cff                    # "Cite this repository" metadata
+├── LICENSE                         # CC BY 4.0 (research content)
+└── package.json                    # VitePress toolchain
+```
 
-## Responsible Disclosure
+## Run the site locally
 
-All identified vulnerabilities were reported to SK ID Solutions through responsible disclosure channels prior to publication. The disclosure timeline is documented in [docs/05-enforcement/responsible-disclosure-timeline.md](docs/05-enforcement/responsible-disclosure-timeline.md).
+Requires Node.js 22 or newer (CI uses the version in [`.nvmrc`](.nvmrc)).
 
----
+```bash
+npm ci
+npm run docs:dev       # http://localhost:5173/smart-id-security-research/
+npm run docs:build     # output in docs/.vitepress/dist
+npm run docs:preview
+```
+
+Every pull request runs the production build, including VitePress's dead-link check. Pushes to `master` deploy to GitHub Pages.
+
+## Cite this work
+
+GitHub's **Cite this repository** button reads [`CITATION.cff`](CITATION.cff) and exports APA or BibTeX.
 
 ## References
 
 <a id="references"></a>
 
-1. FIDO Alliance. *FIDO2: WebAuthn and CTAP*. https://fidoalliance.org/fido2/
-2. NIST. *SP 800-63-4: Digital Identity Guidelines*. National Institute of Standards and Technology, 2024.
-3. Regulation (EU) No 910/2014 of the European Parliament and of the Council (eIDAS).
-4. Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR).
-5. ENISA. *Cybersecurity Guidelines for Trust Services*. European Union Agency for Cybersecurity.
+1. FIDO Alliance. *FIDO2: WebAuthn and CTAP*. <https://fidoalliance.org/fido2/>
+2. NIST. *SP 800-63-4: Digital Identity Guidelines*.
+3. Regulation (EU) No 910/2014 (eIDAS).
+4. Regulation (EU) 2016/679 (GDPR).
+5. ENISA. *Cybersecurity Guidelines for Trust Services*.
+
+## License
+
+- **Research content** – [Creative Commons Attribution 4.0 International](LICENSE). You may share and adapt it, including commercially, with attribution.
+- **Site build configuration** – MIT, see [`docs/LICENSE`](docs/LICENSE).
+- **Third-party material** keeps its original license. The SK ID Solutions documentation reproduced in [`docs/03-regulatory-framework/suggested-security-measures.md`](docs/03-regulatory-framework/suggested-security-measures.md) belongs to SK ID Solutions AS and appears here for analysis.
 
 ---
 
-## Licensing
-
-### Research Content (CC-BY-4.0)
-
-All research documents, analysis, and written content are licensed under [Creative Commons Attribution 4.0 International (CC-BY-4.0)](LICENSE). This allows sharing, adapting, and commercial use with proper attribution.
-
-### Code Components (MIT)
-
-The documentation website build system and configuration files (located in `docs/`) are licensed under the MIT License.
-
-### Third-Party Materials
-
-Any third-party code, research papers, or materials included in this repository maintain their original licenses. The reproduced SK ID Solutions documentation in `docs/03-regulatory-framework/suggested-security-measures.md` is property of SK ID Solutions AS and is included for analytical purposes under fair use.
-
----
-
-## Disclaimer
-
-This research is provided for educational and informational purposes only. All findings have been disclosed through appropriate responsible disclosure channels. The views expressed in editorial and opinion documents represent the author's analysis and do not constitute legal advice.
-
----
-
-## Security Researcher
-
-This repository represents independent security research by Tom Kristian Abel.
+<div align="center">
+Independent research by <a href="https://github.com/tomkabel">Tom Kristian Abel</a>
+</div>
