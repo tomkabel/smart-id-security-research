@@ -94,6 +94,7 @@ Comparative standards analysis, architecture review against established framewor
 ├── .github/workflows/deploy.yml    # Build on PRs, deploy to Pages on master
 ├── CITATION.cff                    # "Cite this repository" metadata
 ├── LICENSE                         # CC BY 4.0 (research content)
+├── LICENSES/MIT.txt                # MIT license for the docs site build system and config
 └── package.json                    # VitePress toolchain
 ```
 
@@ -127,7 +128,7 @@ GitHub's **Cite this repository** button reads [`CITATION.cff`](CITATION.cff) an
 ## License
 
 - **Research content** – [Creative Commons Attribution 4.0 International](LICENSE). You may share and adapt it, including commercially, with attribution.
-- **Site build configuration** – MIT, see [`LICENSE-CODE`](LICENSE-CODE).
+- **Site build configuration** – MIT, see [`LICENSES/MIT.txt`](LICENSES/MIT.txt).
 - **Third-party material** keeps its original license. The SK ID Solutions documentation reproduced in [`docs/03-regulatory-framework/suggested-security-measures.md`](docs/03-regulatory-framework/suggested-security-measures.md) belongs to SK ID Solutions AS and appears here for analysis.
 
 ---
