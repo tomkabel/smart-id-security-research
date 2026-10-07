@@ -1,16 +1,44 @@
 import { defineConfig } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
+import footnote from 'markdown-it-footnote'
+
+// GitHub Pages serves this project at /<repo-name>/. CI injects the exact
+// path from actions/configure-pages (steps.pages.outputs.base_path), so a
+// future repo rename cannot silently break asset URLs again.
+const base = normalizeBase(process.env.VITEPRESS_BASE ?? '/smart-id-security-research/')
+const repoUrl = 'https://github.com/tomkabel/smart-id-security-research'
+
+function normalizeBase(b: string): string {
+  const withLead = b.startsWith('/') ? b : `/${b}`
+  return withLead.endsWith('/') ? withLead : `${withLead}/`
+}
 
 export default defineConfig({
-  title: 'SKID Security Research',
-  description: 'Estonia Cyber Fraud Evolution Analysis - Smart-ID Security Research',
+  title: 'Smart-ID Security Research',
+  description:
+    'Independent security research on Smart-ID authentication and cross-device eID vulnerabilities',
   lang: 'en-US',
-  base: '/skid-security-research',
+  base,
+  cleanUrls: true,
+  lastUpdated: true,
 
+  // Repo-meta files that live under docs/ but are not site pages.
+  srcExclude: ['README.md', 'LICENSE'],
+
+  // `head` URLs are NOT rewritten with `base`, so prefix them explicitly.
   head: [
-    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale:1' }],
+    ['link', { rel: 'icon', href: `${base}favicon.svg`, type: 'image/svg+xml' }],
+    ['link', { rel: 'alternate icon', href: `${base}favicon.ico` }],
     ['meta', { name: 'robots', content: 'index,follow' }],
-    ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }]
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: 'Smart-ID Security Research' }],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content: 'Independent security research on Smart-ID authentication and cross-device eID vulnerabilities'
+      }
+    ]
   ],
 
   themeConfig: {
@@ -32,44 +60,32 @@ export default defineConfig({
       collapsed: false,
       capitalizeFirst: true,
       includeRootIndexFile: true,
-      useTitleFromFrontmatter: true
+      useTitleFromFrontmatter: true,
+      excludeByGlobPattern: ['README.md']
     }),
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/tomkabel/skid-security-research' }
-    ],
+    socialLinks: [{ icon: 'github', link: repoUrl }],
 
-    search: {
-      provider: 'local'
+    editLink: {
+      pattern: `${repoUrl}/edit/master/docs/:path`,
+      text: 'Suggest an edit on GitHub'
     },
 
+    search: { provider: 'local' },
+
     footer: {
-      message: 'Research content licensed under CC-BY-4.0. Code licensed under MIT.',
+      message: 'Research content licensed under CC-BY-4.0. Site code licensed under MIT.',
       copyright: 'Copyright © 2024-present SKID Security Research'
     }
   },
 
   markdown: {
     lineNumbers: true,
-    theme: {
-      light: 'github-light',
-      dark: 'github-dark'
-    },
+    theme: { light: 'github-light', dark: 'github-dark' },
     config: (md) => {
-      // Use dynamic import for ES module compatibility
-      md.use(async () => {
-        const footnote = await import('markdown-it-footnote')
-        return footnote.default || footnote
-      })
+      // Previously registered via an async factory, which markdown-it never
+      // awaits – the plugin was silently a no-op.
+      md.use(footnote)
     }
-  },
-
-  vite: {
-    build: {
-      rollupOptions: {}
-    }
-  },
-
-  // Enable clean URLs for proper SPA routing
-  cleanUrls: true
+  }
 })

@@ -9,4 +9,3 @@ title: Opinion & Editorials
 ## Contents
 
 - [Arnis Paršovs Analysis](./arnis-parsovs-analysis.md) — Critical analysis of University of Tartu cybersecurity researcher Arnis Paršovs' Smart-ID security critique, including assessment of technical prescriptions and policy recommendations.
-- [Fraud Epidemic Editorial](./fraud-epidemic-editorial.md) — Investigative editorial on the institutional failures behind Estonia's Smart-ID fraud epidemic, framing the crisis as architectural betrayal rather than user negligence.
