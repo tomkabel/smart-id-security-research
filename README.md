@@ -127,7 +127,7 @@ GitHub's **Cite this repository** button reads [`CITATION.cff`](CITATION.cff) an
 ## License
 
 - **Research content** – [Creative Commons Attribution 4.0 International](LICENSE). You may share and adapt it, including commercially, with attribution.
-- **Site build configuration** – MIT, see [`docs/LICENSE`](docs/LICENSE).
+- **Site build configuration** – MIT, see [`LICENSE-CODE`](LICENSE-CODE).
 - **Third-party material** keeps its original license. The SK ID Solutions documentation reproduced in [`docs/03-regulatory-framework/suggested-security-measures.md`](docs/03-regulatory-framework/suggested-security-measures.md) belongs to SK ID Solutions AS and appears here for analysis.
 
 ---
