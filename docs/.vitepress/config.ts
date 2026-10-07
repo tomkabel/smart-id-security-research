@@ -5,7 +5,7 @@ import footnote from 'markdown-it-footnote'
 // GitHub Pages serves this project at /<repo-name>/. CI injects the exact
 // path from actions/configure-pages (steps.pages.outputs.base_path), so a
 // future repo rename cannot silently break asset URLs again.
-const base = normalizeBase(process.env.VITEPRESS_BASE ?? '/smart-id-security-research/')
+const base = normalizeBase(process.env.VITEPRESS_BASE || '/smart-id-security-research/')
 const repoUrl = 'https://github.com/tomkabel/smart-id-security-research'
 
 function normalizeBase(b: string): string {
